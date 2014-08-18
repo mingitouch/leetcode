@@ -1,36 +1,17 @@
 class Solution {
 public:
     int maxProfit(vector<int> &prices) {
-        // IMPORTANT: Please reset any member data you declared, as
-        // the same Solution instance will be reused for each test case.
+        if(prices.size() == 0)
+            return 0;
+        int buy = prices[0];
         int profit=0;
-        int maxpro=INT_MIN;
-        int minpro=INT_MAX;
-        int maxindex=0;
-        int minindex=0;
-        for(int i=0;i<prices.size();i++)
+        for(int i=1;i<prices.size();i++)
         {
-            if(maxpro<prices[i])
-            {
-                maxpro = prices[i];
-                maxindex = i;
-            }
-            if(minpro>prices[i])
-            {
-                minpro = prices[i];
-                minindex = i;
-            }
-            if(maxindex>minindex)
-            {
-                if(profit < maxpro-minpro)
-                {
-                    profit = maxpro-minpro;
-                }
-            }
+            if(buy > prices[i])
+                buy = prices[i];
             else
             {
-                maxindex=minindex;
-                maxpro=minpro;
+                profit = max(profit, prices[i] - buy);
             }
         }
         return profit;
