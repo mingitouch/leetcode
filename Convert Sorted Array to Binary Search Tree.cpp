@@ -10,28 +10,21 @@
 class Solution {
 public:
     TreeNode *sortedArrayToBST(vector<int> &num) {
-        if(num.size() == 0)
-            return NULL;
-        TreeNode * root;
-        int begin = 0;
-        int end = num.size()-1;
-        root = new TreeNode(num[(begin+end)/2]);
-        create(root, num, begin, end);
+        TreeNode * root = NULL;
+        BST(root, num, 0, num.size()-1);
         return root;
     }
     
-    void create(TreeNode * &root, vector<int> & num, int low, int high)
+    void BST(TreeNode * & root, vector<int> & num, int low, int high)
     {
-        int mid = (low+high)/2;
-        if(low == high)
+        if(low > high)
+            return ;
+        int mid = (low + high) / 2;
+        if(!root)
         {
             root = new TreeNode(num[mid]);
-            return;
         }
-        if(low > high)
-            return;
-        root = new TreeNode(num[mid]);
-        create(root->left, num, low, mid-1);
-        create(root->right, num, mid+1, high);
+        BST(root->left, num, low, mid-1);
+        BST(root->right, num, mid+1, high);
     }
 };
