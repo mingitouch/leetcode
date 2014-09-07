@@ -18,35 +18,43 @@
 class Solution {
 public:
     TreeNode *sortedListToBST(ListNode *head) {
-        if(head == NULL)
+        if(!head)
             return NULL;
-        vector<int> num;
-        while(head)
+        ListNode * tail = head;
+        int high = 0;
+        int low = 0;
+        while(tail)
         {
-            num.push_back(head->val);
-            head = head->next;
+            tail = tail->next;
+            high++;
         }
         TreeNode * root;
-        int begin = 0;
-        int end = num.size()-1;
-        root = new TreeNode(num[(begin+end)/2]);
-        create(root, num, begin, end);
+        BST(root, head, low, high-1);
+        //return BST(head, low, high-1);;
         return root;
     }
     
-    
-    void create(TreeNode * &root, vector<int> & num, int low, int high)
+/*    TreeNode * BST(ListNode * & head, int low, int high)
     {
-        int mid = (low+high)/2;
-        if(low == high)
-        {
-            root = new TreeNode(num[mid]);
-            return;
-        }
         if(low > high)
-            return;
-        root = new TreeNode(num[mid]);
-        create(root->left, num, low, mid-1);
-        create(root->right, num, mid+1, high);
+            return NULL;
+        int mid = (low + high) / 2;
+        TreeNode * leftNode = BST(head, low, mid - 1);
+        TreeNode * root = new TreeNode(head->val);
+        root->left = leftNode;
+        head = head->next;
+        root->right = BST(head, mid+1, high);
+        return root;
+    }*/
+    void BST(TreeNode * & root, ListNode * & head, int low, int high)
+    {
+        if(low > high)
+            return ;
+        int mid = (low + high) / 2;
+        root = new TreeNode(-1);
+        BST(root->left, head, low, mid-1);
+        root->val = head->val;
+        head = head->next;
+        BST(root->right, head, mid+1, high);
     }
 };
